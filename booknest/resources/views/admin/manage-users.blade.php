@@ -33,7 +33,7 @@
                     <td class="px-4 py-2 border">{{ $user->name }}</td>
                     <td class="px-4 py-2 border">{{ $user->email }}</td>
                     <td class="px-4 py-2 border">
-                        <a href="#" class="text-blue-600 hover:underline">Edit</a> |
+
                         <form action="#" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
