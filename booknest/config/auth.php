@@ -25,7 +25,7 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'admins' => [ // ✅ Added Admin Provider
+        'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],

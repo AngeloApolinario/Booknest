@@ -31,6 +31,24 @@ class BorrowController extends Controller
         return back()->with('success', 'Book borrowed successfully.');
     }
 
+    public function booksBorrow(Request $request)
+    {
+        $search = $request->input('search');
+
+        $borrowedBooks = Borrow::with(['book', 'user'])
+            ->when($search, function ($query) use ($search) {
+                $query->whereHas('book', function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%");
+                })->orWhereHas('user', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.books-borrow', compact('borrowedBooks', 'search'));
+    }
+
     public function returnBook(Request $request, $borrowId)
     {
         $borrow = Borrow::findOrFail($borrowId);

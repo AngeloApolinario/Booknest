@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AdminAuthController extends Controller
 {
+
     public function showLoginForm()
     {
-        return view('admin-login');
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        return view('admin.login');
     }
+
 
     public function login(Request $request)
     {
@@ -21,16 +25,33 @@ class AdminAuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin-dashboard')->with('success', 'Welcome, Admin!');
+        $remember = $request->has('remember');
+
+        if (Auth::guard('admin')->attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+            return redirect()->route('admin.dashboard')->with('success', 'Welcome Admin!');
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials']);
+        return back()->withErrors(['email' => 'Invalid email or password.'])->withInput();
     }
 
-    public function logout()
+
+    public function adminDashboard()
+    {
+        return view('admin.dashboard');
+    }
+
+    public function logout(Request $request)
     {
         Auth::guard('admin')->logout();
-        return redirect()->route('admin.login');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('admin.login')->with('success', 'You have been logged out.');
+    }
+
+    public function manageUsers()
+    {
+        $users = User::all();
+        return view('admin.manage-users', compact('users'));
     }
 }

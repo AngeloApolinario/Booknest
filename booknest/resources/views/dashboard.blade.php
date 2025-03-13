@@ -16,23 +16,6 @@
                 </p>
             </div>
 
-            <!-- Statistics Section -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
-                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Total Books</h4>
-                    <p class="text-3xl font-bold text-blue-500 mt-2">1,245</p>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
-                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Categories</h4>
-                    <p class="text-3xl font-bold text-green-500 mt-2">34</p>
-                </div>
-
-                <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
-                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Authors</h4>
-                    <p class="text-3xl font-bold text-purple-500 mt-2">287</p>
-                </div>
-            </div>
 
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">Recently Added Books</h3>
@@ -48,9 +31,13 @@
                 </div>
             </div>
 
-            <!-- Borrowed Books Section -->
+
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Borrowed Books</h3>
+
+                @if ($borrows->isEmpty())
+                <p class="text-gray-600 dark:text-gray-300 text-center">📖 You have not borrowed any books yet. Start exploring the library and borrow one today!</p>
+                @else
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach ($borrows as $borrow)
                     <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md">
@@ -68,7 +55,9 @@
                     </div>
                     @endforeach
                 </div>
+                @endif
             </div>
+
 
             <!-- User Actions -->
 

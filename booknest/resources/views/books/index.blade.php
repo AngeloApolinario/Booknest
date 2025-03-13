@@ -10,17 +10,17 @@
             <div class="bg-white shadow-sm sm:rounded-lg p-6">
                 <h3 class="text-lg font-semibold mb-4">Available Books</h3>
 
-
+                <!-- Search Form -->
                 <form method="GET" action="{{ route('books.index') }}" class="mb-4 flex">
                     <input type="text" name="search" placeholder="Search books..."
                         value="{{ request('search') }}"
                         class="border border-gray-300 px-4 py-2 w-full rounded-l-md focus:ring focus:ring-blue-300">
-                    <button type="submit" class="bg-blue-500 text-white px-8 py-2 rounded-r-md">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r-md">
                         🔍 Search
                     </button>
                 </form>
 
-
+                <!-- Books Table -->
                 <table class="w-full border-collapse border border-gray-300">
                     <thead>
                         <tr class="bg-gray-200">
